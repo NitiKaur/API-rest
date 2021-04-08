@@ -19,15 +19,14 @@ class UserProfileManager(BaseUserManager):
 
         return user
 
-        def create__superuser(self,email,name,password):
-            """create and saved new superuser with given details"""
-            user = self.create_user(email,name,password)
+    def create_superuser(self,email,name,password):
+        """create and saved new superuser with given details"""
+        user = self.create_user(email,name,password)
+        user.is_superuser = True
+        user.is_staff = True
+        user.save(using=self._db)
 
-            user.is_superuser = True
-            user.is_staff = True
-            user.save(using=self._db)
-
-            return user
+        return user
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """database models for user in system"""
